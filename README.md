@@ -9,6 +9,8 @@ Balloons can be manually positioned and will draw a pretty curved arrow
 The balloon-plus-arrow technique allows the balloons to be positioned so they
 don't obscure some other important element on the page.
 
+![Example](/screenshot.png "Example balloon")
+
 ## Prerequisites
 
 JQuery plugin designed to be used with Ruby on Rails applications. The use
