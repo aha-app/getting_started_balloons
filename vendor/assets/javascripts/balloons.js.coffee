@@ -6,6 +6,7 @@
   class Balloon
 
     constructor: (@targetElement, @options) ->
+      @evaluateTarget()
       @createFilter()
       @createBalloon()
       @createArrow()
@@ -19,6 +20,15 @@
         if options['close']
           options['close'](@targetElement)
       
+    evaluateTarget: ->
+      # See if the target is a descendent of a fixed element. 
+      elem = @targetElement[0]
+      while (elem && !jQuery.nodeName(elem, "html"))
+        if $(elem).css("position") == "fixed"
+          @targetIsFixed = true
+          break
+        elem = elem.parentNode;
+    
     createBalloon: ->
       @balloon = $("<div class='getting-started-balloon balloon'></div>")
       @balloon.html("<div class='close-box'>x</div>" + @options['content'])
@@ -26,16 +36,22 @@
       if @options['width']
         @balloon.css
           width: @options['width'] + "px"
+      if @targetIsFixed
+        @balloon.css
+          position: 'fixed'
       
     createArrow: ->
-      @svg = d3.select("body")
-        .append("svg")
+      @svgContainer = d3.select("body")
+        .append("div")
         .attr("class", "getting-started-balloon container")
+      @svg = @svgContainer.append("svg")
       @arrow = @svg.append("path")
         .attr("d", "")
         .attr("filter", "url(#getting-started-balloon-chalk)")
         .attr("class", "getting-started-balloon arrow")
-        
+      if @targetIsFixed
+        @svgContainer.attr("style", "position: fixed")
+  
     position: ->
       # Position the balloon.
       targetPosition = @targetElement.offset()
@@ -75,7 +91,7 @@
     
     close: ->
       @balloon.remove()
-      @svg.remove()
+      @svgContainer.remove()
       
     balloonCenter: ->
       offset = @balloon.offset()
@@ -141,6 +157,7 @@
       data = $this.data('plugin_gettingStartedBalloon')
       if !data
         $this.data 'plugin_gettingStartedBalloon', (data = new Balloon($this, options))
-
+      if typeof options == 'string'
+        data[options].apply(data, args)
         
 )(jQuery, window)
