@@ -4,10 +4,9 @@
   # Balloon
   #
   class Balloon
-    @createdFilter = false
-    
+
     constructor: (@targetElement, @options) ->
-      @createFilter() unless Balloon.createdFilter
+      @createFilter()
       @createBalloon()
       @createArrow()
       @position()
@@ -40,13 +39,9 @@
     position: ->
       # Position the balloon.
       targetPosition = @targetElement.offset()
-      balloonOffset = @options['offset'] || {horz: -60, vert: -20}
+      balloonOffset = @options['offset'] || {horz: -300, vert: -20}
       
-      if balloonOffset.horz < 0
-        left = targetPosition.left + balloonOffset.horz - @balloon.outerWidth()
-      else
-        left = targetPosition.left + @targetElement.outerWidth() + balloonOffset.horz
-      
+      left = targetPosition.left + balloonOffset.horz
       top = targetPosition.top + balloonOffset.vert
         
       @balloon.css
@@ -124,13 +119,14 @@
       {x: mx + offset * dy, y: my - offset * dx}
       
     createFilter: ->
+      return unless $("#getting-started-balloon-chalk").length == 0
       ns = "http://www.w3.org/2000/svg"
-      r1 = new DOMParser().parseFromString('<svg  xmlns="' + ns + '">
+      r1 = new DOMParser().parseFromString('<svg xmlns="' + ns + '">
         <defs>
           <filter id="getting-started-balloon-chalk" height="2" width="1.6" color-interpolation-filters="sRGB" y="-0.5" x="-0.3">
             <feTurbulence baseFrequency="0.42065" seed="115" result="result1" numOctaves="1" type="turbulence"/>
             <feOffset result="result2" dx="-5" dy="-5"/>
-            <feDisplacementMap scale="8" yChannelSelector="G" in2="result1" xChannelSelector="G" in="SourceGraphic"/>
+            <feDisplacementMap scale="4" yChannelSelector="G" in2="result1" xChannelSelector="G" in="SourceGraphic"/>
           </filter>
         </defs>
         </svg>', 'text/xml');

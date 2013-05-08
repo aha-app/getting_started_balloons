@@ -1,4 +1,4 @@
-# Getting Start Balloons
+# Getting Started Balloons
 
 ## Description
 
