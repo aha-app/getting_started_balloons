@@ -76,4 +76,4 @@ How far the arrow should overlap each element, as a percentage of the element.
 
 ## Credits
 
-Written by Chris Waters (k1w1) for [Aha! - www.aha.io](http://www.aha.io).
+Written by Chris Waters (@k1w1) for [Aha! - www.aha.io](http://www.aha.io).
