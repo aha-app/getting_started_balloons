@@ -9,6 +9,8 @@
       @createArrow()
       @position()
       
+      @createFilter()
+      
       # Setup events.
       $(window).on 'resize', =>
         @position()
@@ -27,6 +29,7 @@
         .attr("class", "getting-started-balloon container")
       @arrow = @svg.append("path")
         .attr("d", "")
+        .attr("filter", "url(#getting-started-balloon-chalk)")
         .attr("class", "getting-started-balloon arrow")
         
     position: ->
@@ -76,7 +79,7 @@
       {x: offset.left + @targetElement.outerWidth()/2, y: offset.top + @targetElement.outerHeight()/2}
     
     # Give a line from the center of a rectangle to lineEnd, return the
-    # point of intersection of the line and rectangle.
+    # point of intersection of the line and rectangle. 
     pointOnRectangle: (rectCenter, rectWidth, rectHeight, lineEnd) ->
       x = lineEnd.x - rectCenter.x
       y = lineEnd.y - rectCenter.y
@@ -88,6 +91,22 @@
       
       {x: rectCenter.x + x, y: rectCenter.y + y}
   
+  
+    createFilter: ->
+      ns = "http://www.w3.org/2000/svg"
+      r1 = new DOMParser().parseFromString('<svg  xmlns="' + ns + '">
+        <defs>
+          <filter id="getting-started-balloon-chalk" height="2" width="1.6" color-interpolation-filters="sRGB" y="-0.5" x="-0.3">
+            <feTurbulence baseFrequency="0.42065" seed="115" result="result1" numOctaves="1" type="turbulence"/>
+            <feOffset result="result2" dx="-5" dy="-5"/>
+            <feDisplacementMap scale="8" yChannelSelector="G" in2="result1" xChannelSelector="G" in="SourceGraphic"/>
+          </filter>
+        </defs>
+        </svg>', 'text/xml');
+      
+      newNode = document.importNode(r1.documentElement, true)
+      document.body.appendChild(newNode)
+
     ###
 
       <svg class="tour-arrow">
