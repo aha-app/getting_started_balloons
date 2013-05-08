@@ -63,12 +63,15 @@
       # Move the points to the edge of the elements.
       from = @pointOnRectangle(origFrom, @balloon.outerWidth() * balloonInset, @balloon.outerHeight() * balloonInset, origTo)
       to = @pointOnRectangle(origTo, @targetElement.outerWidth() * targetInset, @targetElement.outerHeight() * targetInset, origFrom)
-      middle = @perpendicularOffset(from, to, 20)
+      middle = @perpendicularOffset(from, to, 0.5, 20, true)
       
       segments = []
       segments.push("M", from.x, from.y)
       #segments.push("L", to.x, to.y)
       segments.push("C", middle.x, middle.y, middle.x, middle.y, to.x, to.y)
+      arrowStart = @perpendicularOffset(middle, to, 0.5, 15, false, false)
+      arrowEnd = @perpendicularOffset(middle, to, 0.5, 15, false, true)
+      segments.push("M", arrowStart.x, arrowStart.y, to.x, to.y, arrowEnd.x, arrowEnd.y)
       @arrow.attr("d", segments.join(" "))
       #@arrow.attr("d", "M100 100 C 20 20, 40 30, 150 10 M150 10 L120 0 M150 10 L125 30") #lineFunction(lineData))
     
@@ -93,17 +96,21 @@
       
       {x: rectCenter.x + x, y: rectCenter.y + y}
   
-    # Find a point that is offset from the middle of the line.
-    perpendicularOffset: (from, to, offset) ->
-      mx = from.x + (to.x - from.x)/2
-      my = from.y + (to.y - from.y)/2
+    # Find a point that is offset from point on the line.
+    perpendicularOffset: (from, to, percentAlong, offset, alwaysDown = false, opposite = false) ->
+      mx = from.x + (to.x - from.x) * percentAlong
+      my = from.y + (to.y - from.y) * percentAlong
       dx = from.x - to.x
       dy = from.y - to.y
       dist = Math.sqrt(dx*dx + dy*dy)
       dx /= dist
       dy /= dist
       
-      if dx > 0
+      if alwaysDown && dx > 0
+        dx = -dx
+        dy = -dy
+        
+      if opposite
         dx = -dx
         dy = -dy
       
