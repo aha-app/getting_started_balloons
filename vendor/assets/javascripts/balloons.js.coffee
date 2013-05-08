@@ -17,6 +17,8 @@
         @position()
       @balloon.on 'click', '.close-box', =>
         @close()
+        if options['close']
+          options['close'](@targetElement)
       
     createBalloon: ->
       @balloon = $("<div class='getting-started-balloon balloon'></div>")
