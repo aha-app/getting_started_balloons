@@ -35,9 +35,9 @@
       balloonOffset = @options['offset'] || {horz: -60, vert: -20}
       
       if balloonOffset.horz < 0
-        left = targetPosition.left + balloonOffset.horz - @balloon.width()
+        left = targetPosition.left + balloonOffset.horz - @balloon.outerWidth()
       else
-        left = targetPosition.left + @targetElement.width() + balloonOffset.horz
+        left = targetPosition.left + @targetElement.outerWidth() + balloonOffset.horz
       
       top = targetPosition.top + balloonOffset.vert
         
@@ -53,9 +53,12 @@
       origFrom = @balloonCenter()
       origTo = @targetCenter()
       
+      targetInset = @options['targetInset'] || 0.6
+      balloonInset = @options['balloonInset'] || 0.9
+      
       # Move the points to the edge of the elements.
-      from = @pointOnRectangle(origFrom, @balloon.width(), @balloon.height(), origTo)
-      to = @pointOnRectangle(origTo, @targetElement.width(), @targetElement.height(), origFrom)
+      from = @pointOnRectangle(origFrom, @balloon.outerWidth() * balloonInset, @balloon.outerHeight() * balloonInset, origTo)
+      to = @pointOnRectangle(origTo, @targetElement.outerWidth() * targetInset, @targetElement.outerHeight() * targetInset, origFrom)
       
       segments = []
       segments.push("M", from.x, from.y)
@@ -66,11 +69,11 @@
     
     balloonCenter: ->
       offset = @balloon.offset()
-      {x: offset.left + @balloon.width()/2, y: offset.top + @balloon.height()/2}
+      {x: offset.left + @balloon.outerWidth()/2, y: offset.top + @balloon.outerHeight()/2}
       
     targetCenter: ->
       offset = @targetElement.offset()
-      {x: offset.left + @targetElement.width()/2, y: offset.top + @targetElement.height()/2}
+      {x: offset.left + @targetElement.outerWidth()/2, y: offset.top + @targetElement.outerHeight()/2}
     
     # Give a line from the center of a rectangle to lineEnd, return the
     # point of intersection of the line and rectangle.
