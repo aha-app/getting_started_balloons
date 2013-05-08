@@ -3,7 +3,7 @@ require "getting_started_balloons/version"
 
 Gem::Specification.new do |s|
   s.name        = "getting_started_balloons"
-  s.version     = ContentEditor::VERSION
+  s.version     = GettingStartedBalloons::VERSION
   s.platform    = Gem::Platform::RUBY
   s.authors     = ["k1w1"]
   s.email       = ["k1w1@k1w1.org"]
