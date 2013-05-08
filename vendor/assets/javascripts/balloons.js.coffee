@@ -15,10 +15,12 @@
       # Setup events.
       $(window).on 'resize', =>
         @position()
+      @balloon.on 'click', '.close-box', =>
+        @close()
       
     createBalloon: ->
       @balloon = $("<div class='getting-started-balloon balloon'></div>")
-      @balloon.html(@options['content'])
+      @balloon.html("<div class='close-box'>x</div>" + @options['content'])
       $("body").append(@balloon)
       if @options['width']
         @balloon.css
@@ -73,8 +75,11 @@
       arrowEnd = @perpendicularOffset(middle, to, 0.5, 15, false, true)
       segments.push("M", arrowStart.x, arrowStart.y, to.x, to.y, arrowEnd.x, arrowEnd.y)
       @arrow.attr("d", segments.join(" "))
-      #@arrow.attr("d", "M100 100 C 20 20, 40 30, 150 10 M150 10 L120 0 M150 10 L125 30") #lineFunction(lineData))
     
+    close: ->
+      @balloon.remove()
+      @svg.remove()
+      
     balloonCenter: ->
       offset = @balloon.offset()
       {x: offset.left + @balloon.outerWidth()/2, y: offset.top + @balloon.outerHeight()/2}
@@ -132,7 +137,12 @@
       document.body.appendChild(newNode)
       Balloon.createdFilter = true
       
-  window.Balloon = Balloon
-  
+  $.fn.gettingStartedBalloon = (options, args...) ->
+    @each ->
+      $this = $(this)
+      data = $this.data('plugin_gettingStartedBalloon')
+      if !data
+        $this.data 'plugin_gettingStartedBalloon', (data = new Balloon($this, options))
 
+        
 )(jQuery, window)

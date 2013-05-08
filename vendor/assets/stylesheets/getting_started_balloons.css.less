@@ -9,6 +9,27 @@
     border-radius: 4px 4px 4px 4px;
     box-shadow: 1px 1px 10px rgba(0,0,0,0.4);
     z-index: 2000;
+    
+    .close-box {
+      position: absolute;
+      top: 5px;
+      right: 5px;
+      color: white;
+      font-size: 16px;
+      line-height: 12px;
+      font-weight: bold;
+      cursor: pointer;
+      opacity: 0.5;
+      
+      -moz-user-select: none; 
+      -khtml-user-select: none; 
+      -webkit-user-select: none; 
+      -o-user-select: none;
+      
+      &:hover {
+        opacity: 1.0;
+      }
+    }
   }
 
   &.container {
