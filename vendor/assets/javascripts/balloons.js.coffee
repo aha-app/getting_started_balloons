@@ -53,6 +53,8 @@
         @svgContainer.attr("style", "position: fixed")
   
     position: ->
+      console.log("positioning")
+      
       # Position the balloon.
       targetPosition = @targetElement.offset()
       balloonOffset = @options['offset'] || {horz: -300, vert: -20}
@@ -155,9 +157,9 @@
     @each ->
       $this = $(this)
       data = $this.data('plugin_gettingStartedBalloon')
-      if !data
-        $this.data 'plugin_gettingStartedBalloon', (data = new Balloon($this, options))
       if typeof options == 'string'
-        data[options].apply(data, args)
+        data[options].apply(data, args) if data
+      else if !data
+        $this.data 'plugin_gettingStartedBalloon', (data = new Balloon($this, options))
         
 )(jQuery, window)
