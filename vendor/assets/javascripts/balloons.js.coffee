@@ -55,8 +55,6 @@
         @svgContainer.attr("style", "position: fixed")
   
     position: ->
-      console.log("positioning")
-      
       # Position the balloon.
       targetPosition = @targetElement.offset()
       balloonOffset = @options['offset'] || {horz: -300, vert: -20}

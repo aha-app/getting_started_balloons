@@ -1,3 +1,6 @@
+@import "twitter/bootstrap/variables.less"; 
+@import "twitter/bootstrap/mixins";
+
 .getting-started-balloon {
   &.balloon {
     position: absolute;
@@ -6,8 +9,8 @@
     padding: 15px;
     color: white;
     background-color: #64b80b;
-    border-radius: 4px 4px 4px 4px;
-    box-shadow: 1px 1px 10px rgba(0,0,0,0.4);
+    .border-radius(4px 4px 4px 4px);
+    .box-shadow(1px 1px 10px rgba(0,0,0,0.4));
     z-index: 2000;
     
     .close-box {
@@ -21,10 +24,7 @@
       cursor: pointer;
       opacity: 0.5;
       
-      -moz-user-select: none; 
-      -khtml-user-select: none; 
-      -webkit-user-select: none; 
-      -o-user-select: none;
+      .user-select(none);
       
       &:hover {
         opacity: 1.0;
