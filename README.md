@@ -57,9 +57,16 @@ By default the balloon will be 250 pixels wide and will grow vertically.
 
 ### offset    
 
-    offset: {horz: -80, vert: 20}
+    offset: 60
 
 Offset that the balloon should be placed from the target element.
+
+### angle
+
+    angle: 45
+
+Angle in degrees, measured clockwise from three o'clock, that the balloon should
+be placed relative to the target element.
 
 ### close
 

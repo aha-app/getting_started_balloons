@@ -57,11 +57,17 @@
     position: ->
       # Position the balloon.
       targetPosition = @targetElement.offset()
-      balloonOffset = @options['offset'] || {horz: -350, vert: -20}
+      balloonOffset = @options['offset'] || 60
+      balloonAngle = (if @options['angle']? then @options['angle'] else 180) * Math.PI / 180
       
-      left = targetPosition.left + balloonOffset.horz
-      top = targetPosition.top + balloonOffset.vert
-        
+      offset = @distanceToEdge(@targetElement.outerWidth(), @targetElement.outerHeight(), balloonAngle) +
+        @distanceToEdge(@balloon.outerWidth(), @balloon.outerHeight(), balloonAngle) +
+        balloonOffset
+      
+      tc = @targetCenter()
+      left = tc.x + offset * Math.cos(balloonAngle) - @balloon.outerWidth() / 2
+      top = tc.y + offset * Math.sin(balloonAngle) - @balloon.outerHeight() / 2
+      
       @balloon.css
         top: top + "px"
         left: left + "px"
@@ -69,7 +75,7 @@
       # Update the arrow.
       @svg.attr("width", $(document).width()).attr("height", $(document).height())
       @drawArrow()
-      
+    
     drawArrow: (from, to) ->
       origFrom = @balloonCenter()
       origTo = @targetCenter()
@@ -135,6 +141,15 @@
         dy = -dy
       
       {x: mx + offset * dy, y: my - offset * dx}
+      
+    distanceToEdge: (width, height, angle) ->
+      c = Math.abs(Math.cos(angle));
+      s = Math.abs(Math.sin(angle));
+      if c * height > s * width # It crosses left or right side
+        (width/2) / c
+      else # Top or bottom side
+        len = (height/2) / s;
+      
       
     createFilter: ->
       return unless $("#getting-started-balloon-chalk").length == 0
