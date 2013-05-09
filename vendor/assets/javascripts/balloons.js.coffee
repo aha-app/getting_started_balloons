@@ -57,7 +57,7 @@
     position: ->
       # Position the balloon.
       targetPosition = @targetElement.offset()
-      balloonOffset = @options['offset'] || {horz: -300, vert: -20}
+      balloonOffset = @options['offset'] || {horz: -350, vert: -20}
       
       left = targetPosition.left + balloonOffset.horz
       top = targetPosition.top + balloonOffset.vert
@@ -74,7 +74,7 @@
       origFrom = @balloonCenter()
       origTo = @targetCenter()
       
-      targetInset = @options['targetInset'] || 0.6
+      targetInset = @options['targetInset'] || 1.0
       balloonInset = @options['balloonInset'] || 0.9
       
       # Move the points to the edge of the elements.
