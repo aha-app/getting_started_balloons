@@ -19,6 +19,8 @@
         @close()
         if options['close']
           options['close'](@targetElement)
+      @targetElement.on 'remove', =>
+        @close() # Remove the balloon if the target goes away.
       
     evaluateTarget: ->
       # See if the target is a descendent of a fixed element. 
