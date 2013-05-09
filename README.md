@@ -76,6 +76,12 @@ be placed relative to the target element.
 
 Callback will be called when the balloon closes.
 
+### flipLine
+
+    flipLine: true
+    
+Whether the kink in the line should face the other way.
+
 ### targetInset, balloonInset
 
     targetInset: 0.9,

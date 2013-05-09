@@ -86,7 +86,7 @@
       # Move the points to the edge of the elements.
       from = @pointOnRectangle(origFrom, @balloon.outerWidth() * balloonInset, @balloon.outerHeight() * balloonInset, origTo)
       to = @pointOnRectangle(origTo, @targetElement.outerWidth() * targetInset, @targetElement.outerHeight() * targetInset, origFrom)
-      middle = @perpendicularOffset(from, to, 0.5, 20, true)
+      middle = @perpendicularOffset(from, to, 0.5, 20, @options['flipLine'])
       
       segments = []
       segments.push("M", from.x, from.y)
@@ -123,7 +123,7 @@
       {x: rectCenter.x + x, y: rectCenter.y + y}
   
     # Find a point that is offset from point on the line.
-    perpendicularOffset: (from, to, percentAlong, offset, alwaysDown = false, opposite = false) ->
+    perpendicularOffset: (from, to, percentAlong, offset, flip = false, opposite = false) ->
       mx = from.x + (to.x - from.x) * percentAlong
       my = from.y + (to.y - from.y) * percentAlong
       dx = from.x - to.x
@@ -132,10 +132,10 @@
       dx /= dist
       dy /= dist
       
-      if alwaysDown && dx > 0
+      if flip
         dx = -dx
         dy = -dy
-        
+          
       if opposite
         dx = -dx
         dy = -dy
