@@ -59,7 +59,8 @@ By default the balloon will be 250 pixels wide and will grow vertically.
 
     offset: 60
 
-Offset that the balloon should be placed from the target element.
+Offset that the balloon should be placed from the target element. This offset 
+is measured between the bounding boxes of the balloon and the target element.
 
 ### angle
 
@@ -74,7 +75,8 @@ be placed relative to the target element.
       console.log("Closed balloon")
     }
 
-Callback will be called when the balloon closes.
+Callback which will be called when the balloon closes. The target element is passed
+to the callback.
 
 ### flipLine
 
