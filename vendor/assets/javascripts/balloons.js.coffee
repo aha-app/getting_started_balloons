@@ -34,6 +34,8 @@
     createBalloon: ->
       @balloon = $("<div class='getting-started-balloon balloon'></div>")
       @balloon.html("<div class='close-box'>x</div>" + @options['content'])
+      @balloon.css
+        'z-index': @targetElement.zIndex() + 1 
       $("body").append(@balloon)
       if @options['width']
         @balloon.css
@@ -43,16 +45,17 @@
           position: 'fixed'
       
     createArrow: ->
+      if @targetIsFixed then style =  "position: fixed;" else style = ""
+   
       @svgContainer = d3.select("body")
         .append("div")
         .attr("class", "getting-started-balloon container")
+        .attr("style", style + "z-index: " + (@targetElement.zIndex() + 2))
       @svg = @svgContainer.append("svg")
       @arrow = @svg.append("path")
         .attr("d", "")
         .attr("filter", "url(#getting-started-balloon-chalk)")
         .attr("class", "getting-started-balloon arrow")
-      if @targetIsFixed
-        @svgContainer.attr("style", "position: fixed")
   
     position: ->
       # Position the balloon.
