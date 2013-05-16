@@ -6,6 +6,7 @@
   class Balloon
 
     constructor: (@targetElement, @options) ->
+      @targetIsFixed = false
       @evaluateTarget()
       @createFilter()
       @createBalloon()
@@ -45,7 +46,7 @@
           position: 'fixed'
       
     createArrow: ->
-      if @targetIsFixed then style =  "position: fixed;" else style = ""
+      if @targetIsFixed then style = "position: fixed;" else style = ""
    
       @svgContainer = d3.select("body")
         .append("div")
@@ -59,7 +60,7 @@
   
     position: ->
       # Position the balloon.
-      targetPosition = @targetElement.offset()
+      targetPosition = @targetElement.fixedOffset(@targetIsFixed)
       balloonOffset = @options['offset'] || 60
       balloonAngle = (if @options['angle']? then @options['angle'] else 180) * Math.PI / 180
       
@@ -105,11 +106,11 @@
       @svgContainer.remove()
       
     balloonCenter: ->
-      offset = @balloon.offset()
+      offset = @balloon.fixedOffset(@targetIsFixed)
       {x: offset.left + @balloon.outerWidth()/2, y: offset.top + @balloon.outerHeight()/2}
       
     targetCenter: ->
-      offset = @targetElement.offset()
+      offset = @targetElement.fixedOffset(@targetIsFixed)
       {x: offset.left + @targetElement.outerWidth()/2, y: offset.top + @targetElement.outerHeight()/2}
     
     # Give a line from the center of a rectangle to lineEnd, return the
@@ -170,6 +171,15 @@
       newNode = document.importNode(r1.documentElement, true)
       document.body.appendChild(newNode)
       Balloon.createdFilter = true
+      
+  # Return the offset of an element, taking into account whether it is position:fixed.
+  $.fn.fixedOffset = (isFixed) ->
+    o = $(this[0])
+    if isFixed
+      box = this[0].getBoundingClientRect()
+      {top: box.top, left: box.left}
+    else
+      o.offset()
       
   $.fn.gettingStartedBalloon = (options, args...) ->
     @each ->
