@@ -77,7 +77,7 @@
         left: left + "px"
         
       # Update the arrow.
-      @svg.attr("width", $(document).width()).attr("height", $(document).height())
+      @svg.attr("width", $(document).width() - 10).attr("height", $(document).height() - 10)
       @drawArrow()
     
     drawArrow: (from, to) ->
@@ -158,7 +158,7 @@
     createFilter: ->
       return unless $("#getting-started-balloon-chalk").length == 0
       ns = "http://www.w3.org/2000/svg"
-      r1 = new DOMParser().parseFromString('<svg xmlns="' + ns + '">
+      r1 = new DOMParser().parseFromString('<svg xmlns="' + ns + '" style="width: 0; height: 0;">
         <defs>
           <filter id="getting-started-balloon-chalk" height="2" width="1.6" color-interpolation-filters="sRGB" y="-0.5" x="-0.3">
             <feTurbulence baseFrequency="0.42065" seed="115" result="result1" numOctaves="1" type="turbulence"/>
