@@ -23,7 +23,17 @@ module GetttingStartedBalloons
         end
       end
       
-      "$('#{target_selector}').gettingStartedBalloon({#{js_options.join(',')}});".html_safe
+      # Make sure that everything is loaded before we try to place the balloon.
+      "(function(){
+        function createBalloon() {
+          setTimeout(function() {
+            $('#{target_selector}').gettingStartedBalloon({#{js_options.join(',')}});
+          }, 500);
+        };
+        
+        $(function() { createBalloon(); });
+        $(document).one('page:change', function() { createBalloon(); });
+      })();".html_safe
     end
   end
 end
