@@ -36,7 +36,7 @@
       @balloon = $("<div class='getting-started-balloon balloon'></div>")
       @balloon.html("<div class='close-box'>x</div>" + @options['content'])
       @balloon.css
-        'z-index': @targetElement.zIndex() + 1 
+        'z-index': @options['zIndex'] || @targetElement.zIndex() + 1 
       $("body").append(@balloon)
       if @options['width']
         @balloon.css

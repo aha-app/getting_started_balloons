@@ -91,6 +91,12 @@ Whether the kink in the line should face the other way.
     
 How far the arrow should overlap each element, as a percentage of the element.
 
+### zIndex
+
+    zIndex: 5
+
+The z-index to set on the balloon, useful if the target element is located near other elements with high z-indices that may eclipse the balloon. If not manually set, the z-index is set to 1 higher than that of the target element.
+
 ## Credits
 
 Written by Chris Waters (@k1w1) for [Aha! - www.aha.io](http://www.aha.io).
