@@ -48,10 +48,12 @@
     createArrow: ->
       if @targetIsFixed then style = "position: fixed;" else style = ""
    
+      zIndex = if @options['zIndex'] then @options['zIndex'] + 1 else @targetElement.zIndex() + 2
+
       @svgContainer = d3.select("body")
         .append("div")
         .attr("class", "getting-started-balloon container")
-        .attr("style", style + "z-index: " + (@targetElement.zIndex() + 2))
+        .attr("style", style + "z-index: #{zIndex}")
       @svg = @svgContainer.append("svg")
       @arrow = @svg.append("path")
         .attr("d", "")
